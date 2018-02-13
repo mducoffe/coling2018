@@ -1,0 +1,7 @@
+			Passages-clefs - ADT						Deeplearning
+		sans filtre	z > 0 	substantifs 	substantifs et z > 0		random		random+trainable	embedding	embedding+trainable
+français	58%		52%	88%		89%				86%		90%			84%		91%
+latin		69%		62%	84%		82%				81%		92%			89%		93%
+
+
+
