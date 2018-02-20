@@ -16,26 +16,79 @@ The Figure \ref{comparision} shows us a comparison between z-score and activatio
 
 \subsection{Dataset : English}
 
+\begin{quote}
+\textit{[...] \textcolor{red}{\textbf{i enjoyed three moments}} in the film in total , \textcolor{red}{\textbf{and if i am being honest and}} the person \textcolor{red}{\textbf{next to me fell asleep}} in the middle and started PAD during the slow space chasescenes . \textcolor{red}{\textbf{the story failed to}} draw me in and entertain \textcolor{red}{\textbf{me the way}} [...]} 
+\end{quote}
+
+Pos : 
+
+    film : 5.28
+    and : 12.23 (x4)
+    honest : 4
+    entertain : 2.4
+
+Neg:
+
+    cooccurrence : 
+        "and if" et honest
+        "LEM:fall" et asleep
+        story :  -1.61  ;   failed : 1.94    mais "NN LEM:fail" : 4.25
+
 
 \subsection{Dataset : French}
 
-" …notre pays advienne, à l'école pour nos enfants, au travail pour l'ensemble de nos concitoyens, pour le climat, pour le quotidien de chacune et chacun d' entre vous. Ces transformations profondes ont commencé et se poursuivront avec la même force, le même rythme, la même intensité"
+\begin{quote}
+\textit{[...] notre pays \textcolor{red}{\textbf{advienne à}} l'école pour nos enfants, au travail pour l' ensemble de \textcolor{red}{\textbf{nos concitoyens}} pour le climat pour le quotidien de chacune et chacun d' entre vous . \textcolor{red}{\textbf{Ces transformations profondes}} ont commencé et se \textcolor{red}{\textbf{poursuivront}} avec la même force le même rythme la même intensité [...]} 
+\end{quote}
 
-Cet extrait issu du discours de vœux d'Emmanuel Macron (31 décembre 2017) est mal attribué par l'ADT (Z-score) qui le rapproche statistiquement de De Gaulle, et bien attribué par le Deep learning qui reconnait du Macron.
-L'erreur d'attribution statistique s'explique par une phraséologie très gaullienne et la multiplication de marqueurs linguistiques fortement indicés chez de Gaulle : par exemple, de Gaulle avait pour caractéristique de faire des phrases longues et littéraires articulées autour de conjonctions de coordination  comme " et " (z-score = 28 chez de Gaulle, 2 occurrences dans l'extrait). Son discours était également plus conceptuel que la moyenne, et cela se traduisait par une sur-utilisation des articles définis (le, la, l', les) très nombreux dans  l'extrait (7 occurrences) ; particulièrement au féminin singulier (" la " République, " la " liberté, " la " nation ", " la " guerre, etc ; ici " la " même force, " la " même intensité).
+This excerpt from the speech of Emmanuel Macron (31 December 2017) is poorly attributed by the ADT (Z-score) which brings it statistically closer to De Gaulle, and well attributed by the Deep learning that recognizes Macron.
+The error of statistical attribution can be explained by a Gaullist phraseology and the multiplication of linguistic markers strongly indexed by de Gaulle: for example, de Gaulle had the characteristic of making long and literary sentences articulated around conjunctions of coordination as " and "(z-score = 28 for de Gaulle, 2 occurrences in the excerpt). His speech was also more conceptual than the average, and this resulted in an over-use of the articles defined (the, the, the, the) very numerous in the extract (7 occurrences); especially in the feminine singular ("the" Republic, "the" freedom, "the" nation "," the "war, etc., here" the "same force," the "same intensity).
 
-Les meilleures performances du deep learning interrogent quant à elle le linguiste et épouse parfaitement ce que l'on sait socio-linguistiquement du discours dynamique de Macron.
-La zone d'activation la plus importante de l'extrait concerne le syntagme nominal " transformation profonde ".
-Pris séparément, aucun des deux mots du syntagme n'est très macronien d'un point de vue statistique (" transformation " = XXX ; " profonde " = YYY). Mieux : le syntagme lui-même n'est pas attesté dans le corpus d'apprentissage du Président (0 occurrence). 
-Cependant, on peut constater que la co-occurrence de " transformation " et de " profonde " s'élève à +XXX chez Macron : ce n'est donc pas l'occurrence d'un mot seul, ou de l'autre, qui est macronienne mais l'apparition simultanée des deux dans une même fenêtre.
-Pour autant, la cooccurrence de " transformation " et de " profonde " ne saurait être suffisante pour caractériser Macron, notamment parce que la cooccurrence des deux mots est plus fréquente encore chez Pompidou par exemple ; d'autres indices additionnés sont nécessaires à l'attribution.
-Les zones d'activation secondes et complémentaires de l'extrait concernent ainsi les deux verbes " advienne " et " poursuivront ".
-D'un point de vue sémantique, les deux verbes conspirent parfaitement, après le syntagme  " transformation profonde ", à donner la dynamique nécessaire à un discours qui prône le changement. Mais c'est les temps verbaux (portés par la morphologie des verbes) qui apparaissent déterminants dans l'analyse.
-Le calcul des codes grammaticaux co-occurrents au mot " transformation " indique ainsi que les verbes au subjonctif et les verbes au futur (et également les noms) sont les codes privilégies chez Macron. (GRAPH XXX)
-Plus précisément encore, l'algorithme indique que, chez Macron, lorsque " transformation " est associée à un verbe au subjonctif (ici "advienne "), alors il existe le plus souvent un verbe au futur co-présent (ici " poursuivront ").
-" Transformation profonde ", " advenir " au subjonctif, " poursuivre " au futur : tous ces éléments signent, ensemble, un discours fait de promesse d'action, dans la bouche d'un président jeune et dynamique.
-Enfin, le graphique indique que " transformation " est surtout associée aux noms chez le Président : dans une concentration extraordinaire, l'extrait en recense ainsi 11 ( " pays ", " école ", " enfants ", " travail ", " concitoyens ", " climat ", " quotidien ", " transformations ", " force ", " rythme ", " intensité ").
+The best performances of deep learning question the linguist and marry perfectly what we know socio-linguistically dynamic speech of Macron.
 
+The most important activation zone of the extract concerns the noun phrase "deep transformation".
+Taken separately, none of the two words of the phrase are very Macronian from a statistical point of view ("transformation" = XXX "deep" = YYY). Better: the syntagm itself is not attested in the corpus of learning of the President (0 occurrence).
+However, it can be seen that the co-occurrence of "transformation" and "deep" amounts to + XXX at Macron: so it is not the occurrence of one word alone, or the other, which is Macronian but the simultaneous appearance of both in the same window.
+However, the co-occurrence of "transformation" and "profound" can not be sufficient to characterize Macron, especially because the co-occurrence of the two words is more frequent at Pompidou for example; other summed indices are required for allocation.
+The second and complementary activation zones of the extract thus concern the two verbs "come" and "will continue".
+From a semantic point of view, the two verbs perfectly conspire, after the phrase "profound transformation", to give the necessary dynamic to a discourse that advocates change. But it is the verb tenses (borne by the morphology of the verbs) that appear to be determining in the analysis.
+The calculation of the grammatical codes co-occurring with the word "transformation" thus indicates that the verbs in the subjunctive and the verbs in the future (and also the nouns) are the privileged codes at Macron. (GRAPH XXX)
+More precisely, the algorithm indicates that, in Macron, when "transformation" is associated with a verb in the subjunctive (here "come"), then there is usually a verb in the future co-present (here "will continue") .
+"Transformation deep", "to come" to the subjunctive, "to continue" to the future: all these elements sign, together, a speech made of promise of action, in the mouth of a young and dynamic president.
+Finally, the graph indicates that "transformation" is especially associated with names in the President: in an extraordinary concentration, the extract lists 11 ("country", "school", "children", "work", "fellow citizens"). , "climate", "daily", "transformations", "force", "rhythm", "intensity").
 
 \subsection{Dataset : Latin}
+
+\begin{quote}
+\textit{[...] tutus tenebat se quoad multum ac diu PAD quattuor milia peditum et quingenti equites in supplementum missi ex PAD sunt . tum refecta tandem spe \textcolor{red}{\textbf{castra propius hostem}} mouit classem que et ipse instrui parari que iubet ad insulas maritimam que oram tutandam . in \textcolor{red}{\textbf{ipso impetu}} mouendarum de [...]} 
+\end{quote}
+
+As historians, Caesar and Livy share a number of specific words:
+- tool words, here (reflexive pronoun) -que (= "and", a coordinator), prepositions in "in", ad "to", ex "out of"
+- names like equites "the riders" or "castra" the camp
+
+The attribution of the sentence to Caesar can not rest on the specificities - that or in or castra, with differences equivalent or inferior to Livy. On the other hand, the differences of se, ex, are superior, as that of equites. Two very Caesarian terms undoubtedly make the difference iubet ("he orders") and ("milia" thousands).
+
+The superior deviations of quattuor ("four"), "castra", "hostem" (the enemy), "impetu" ("the assault") at Titus Live are not enough to switch the attribution to this author .
+
+On the other hand, the Deep Learning "activates" as "liviennes" several zones appearing at the beginning of sentence and corresponding to coherent syntactic structures:
+
+- Tandem reflexes spe castra propius hostem mouit ": then the hope having finally returned, it approaches the camp closer to the camp of the enemy".
+
+despite the fact that castra in hostem mouit is attested only by Tacitus
+
+- in ipso metu: in fear itself ", while in X metu is attested 1x at Caesar and once at Quinte-Curce.
+
+The hypothesis here is twofold:
+
+- the structure tum + participates Ablative Absolute (tum refecta) is more characteristic of Titus Live (3.3, 8 occurrences) than of Caesar (1.7: 3 occurrences), even if it is even more specific of Tacitus (4 , 2: 10 occurrences).
+
+- co-perpetratory castra and impetu networks may also have played a role:
+
+impetu:
+- in Titus Live, appear as cooccurrents lemmas HOSTIS 9.42 and CASTRA 6.75, while HOSTIS only has a gap of 3.41 in Caesar and that CASTRA does not appear in the list of cooccurrents impetu
+
+castra:
+the first cooccurent at Titus Live is HOSTIS (22,72), before CASTRA (10,18), AD (10,85), IN (8,21), IMPETVS (7,35), -QUE (5,86) )
+while in Caesar, IMPETVS does not appear and the scores of all other lemmas are lower except CASTRA (15,15): HOSTIS (8),, AD (10,35), IN (5,17), - THAT (4.79)
 
