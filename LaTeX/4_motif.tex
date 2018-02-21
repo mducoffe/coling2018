@@ -46,6 +46,14 @@ The french data set is about political discourses. It's a corpus of 2.5 millions
 \textit{[...] notre pays \textcolor{red}{\textbf{advienne à}} l'école pour nos enfants, au travail pour l' ensemble de \textcolor{red}{\textbf{nos concitoyens}} pour le climat pour le quotidien de chacune et chacun d' entre vous . \textcolor{red}{\textbf{Ces transformations profondes}} ont commencé et se \textcolor{red}{\textbf{poursuivront}} avec la même force le même rythme la même intensité [...]} 
 \end{quote}
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{img/macron_activation.png}
+\caption{Deconvolution on E. Macron speech.}
+\label{macron_activation}
+\end{center}
+\end{figure}
+
 The Z-score brings statistically closer to De Gaulle than E. Macron. The error of statistical attribution can be explained by a Gaullist phraseology and the multiplication of linguistic markers strongly indexed by de Gaulle: for example, de Gaulle had the characteristic of making long and literary sentences articulated around conjunctions of coordination as \textit{et} (z-score = 28 for de Gaulle, 2 occurrences in the excerpt). His speech was also more conceptual than the average, and this resulted in an over-use of the articles defined \textit{le}, \textit{la}, \textit{l\'}, \textit{les}) very numerous in the extract (7 occurrences); especially in the feminine singular (\textit{la republique}, \textit{la liberté}, \textit{la nation}, \textit{la guerre}, etc., here we have \textit{la même force}, \textit{la même intensité}.
 
 Les meilleures performances du deep learning interrogent quant à elle le linguiste et épouse parfaitement ce que l'on sait socio-linguistiquement du discours dynamique de Macron.
@@ -60,41 +68,41 @@ The most important activation zone of the extract concerns the nominal syntagm \
 \end{center}
 \end{figure}
 
-
 More precisely, the algorithm indicates that, in Macron, when \textit{transformation} is associated with a verb in the subjunctive (here \textit{advienne}), then there is usually a verb in the future co-present (here \textit{poursuivront}). \textit{transformations profondes}, \textit{advienne} to the subjunctive, \textit{poursuivront} to the future: all these elements sign, together, a speech made of promise of action, in the mouth of a young and dynamic president. Finally, the graph indicates that \textit{transformations} is especially associated with names in the President: in an extraordinary concentration, the extract lists 11 (\textit{pays}, \textit{école}, \textit{enfants}, \textit{travail}, \textit{concitoyens}, \textit{climat}, \textit{quotidien}, \textit{transformations}, \textit{force}, \textit{rythme}, \textit{intensité}).
 
 \subsection{Dataset : Latin}
+
+The last dataset we used is based on Latin language. We made a contrastive corpus of 2 millions words with most of the main Latin authors (22 authors). As the French dataset, the learning task here was to be able to predict each author according to new sequence of words. The next example is a excerpt of chapter 26 of the 23th book of Livy :
 
 \begin{quote}
 \textit{[...] tutus tenebat se quoad multum ac diu PAD quattuor milia peditum et quingenti equites in supplementum missi ex PAD sunt . tum refecta tandem spe \textcolor{red}{\textbf{castra propius hostem}} mouit classem que et ipse instrui parari que iubet ad insulas maritimam que oram tutandam . in \textcolor{red}{\textbf{ipso impetu}} mouendarum de [...]} 
 \end{quote}
 
-As historians, Caesar and Livy share a number of specific words:
-- tool words, here (reflexive pronoun) -que (= "and", a coordinator), prepositions in "in", ad "to", ex "out of"
-- names like equites "the riders" or "castra" the camp
+The statistics here gives this sequence to Caesar\footnote{Gaius Julius Caesar, 100 BC - 44 BC, usually called Julius Caesar, was a Roman politician and general and a notable author of Latin prose.} but Livy is not so far from the decision. As historians, Caesar and Livy share a number of specific words : for example tool words like \textit{se} (reflexive pronoun) or \textit{que} (a coordinator) and prepositions like \textit{in}, \textit{ad}, \textit{ex}, \textit{of}. There are also names like \textit{equites} (cavalry) or \textit{castra} (fortified camp).
 
-The attribution of the sentence to Caesar can not rest on the specificities - that or in or castra, with differences equivalent or inferior to Livy. On the other hand, the differences of se, ex, are superior, as that of equites. Two very Caesarian terms undoubtedly make the difference iubet ("he orders") and ("milia" thousands).
+The attribution of the sentence to Caesar can not be only reliable on specificities (z-score) \textit{que} or \textit{in} or \textit{castra}, with differences equivalent or inferior to Livy. On the other hand, the differences of \textit{se}, \textit{ex}, are superior, as that of \textit{equites}. Two very Caesarian terms undoubtedly make the difference \textit{iubet} (he orders) and \textit{milia} (thousands).
 
-The superior deviations of quattuor ("four"), "castra", "hostem" (the enemy), "impetu" ("the assault") at Titus Live are not enough to switch the attribution to this author .
+The greater score of \textit{quattuor} (four), \textit{castra}, \textit{hostem} (the enemy), \textit{impetu} (the assault) at Livy are not enough to switch the attribution to this author.
 
-On the other hand, the Deep Learning "activates" as "liviennes" several zones appearing at the beginning of sentence and corresponding to coherent syntactic structures:
+On the other hand, the Deep Learning activate several zones appearing at the beginning of sentence and corresponding to coherent syntactic structures (for Livy) -- \textit{Tandem reflexes spe castra propius hostem mouit} (then the hope having finally returned, it approaches the camp closer to the camp of the enemy) -- despite the fact that \textit{castra} in \textit{hostem mouit} is attested only by Tacitus\footnote{Publius (or Gaius) Cornelius Tacitus, 56 BC - 120 BC, was a senator and a historian of the Roman Empire.}. 
 
-- Tandem reflexes spe castra propius hostem mouit ": then the hope having finally returned, it approaches the camp closer to the camp of the enemy".
+There are also \textit{in ipso metu} (in fear itself), while \textit{in} followed by \textit{metu} is counted one time with Caesar and one time also with Quinte-Curce\footnote{Quintus Curtius Rufus was a Roman historian, probably of the 1st century, author of his only known and only surviving work, "Histories of Alexander the Great"}.
 
-despite the fact that castra in hostem mouit is attested only by Tacitus
+More complex structure are possibly also detected by the deep learning : the structure \textit{tum} + participates Ablative Absolute (\textit{tum refecta}) is more characteristic of Livy (z-score 3.3 with 8 occurrences) than of Caesar (z-score 1.7 with 3 occurrences), even if it is even more specific of Tacitus (z-score 4.2 with 10 occurrences).
 
-- in ipso metu: in fear itself ", while in X metu is attested 1x at Caesar and once at Quinte-Curce.
+Finally and more likely, the co-occurrence between \textit{castra}, \textit{hostem} and \textit{impetu} may have played a major role : Figure \ref{latin}
 
-The hypothesis here is twofold:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{img/cooc_latin.png}
+\caption{specific co-occurrences between \textit{impetu} and \textit{castra} showed by Hyperbase}
+\label{latin}
+\end{center}
+\end{figure}
 
-- the structure tum + participates Ablative Absolute (tum refecta) is more characteristic of Titus Live (3.3, 8 occurrences) than of Caesar (1.7: 3 occurrences), even if it is even more specific of Tacitus (4 , 2: 10 occurrences).
+With Livy, \textit{impetu} appear co-occurrents as lemmas \textit{HOSTIS} (z-score 9.42) and \textit{CASTRA} (z-score 6.75), while \textit{HOSTIS} only has a gap of 3.41 in Caesar and that \textit{CASTRA} does not appear in the list of co-occurrents
 
-- co-perpetratory castra and impetu networks may also have played a role:
+For \textit{castra}, the first cooccurent for Livy is \textit{HOSTIS} (z-score 22.72), before \textit{CASTRA} (z-score 10.18), \textit{AD} (z-score 10.85), \textit{IN} (z-score 8.21), \textit{IMPETVS} (z-score 7.35), \textit{QUE} (z-score 5.86) ) while in Caesar, \textit{IMPETVS} does not appear and the scores of all other lemmas are lower except \textit{CASTRA} (z-score 15.15), \textit{HOSTIS} (8),  \textit{AD} (10,35), \textit{IN} (5,17), \textit{QUE} (4.79)
 
-impetu:
-- in Titus Live, appear as cooccurrents lemmas HOSTIS 9.42 and CASTRA 6.75, while HOSTIS only has a gap of 3.41 in Caesar and that CASTRA does not appear in the list of cooccurrents impetu
-
-castra:
-the first cooccurent at Titus Live is HOSTIS (22,72), before CASTRA (10,18), AD (10,85), IN (8,21), IMPETVS (7,35), -QUE (5,86) )
-while in Caesar, IMPETVS does not appear and the scores of all other lemmas are lower except CASTRA (15,15): HOSTIS (8),, AD (10,35), IN (5,17), - THAT (4.79)
+Tout se passe donc bien comme si le Deep Learning arrivait ici à prendre en compte simultanément la spécificité, les structures de phrase et les réseaux cooccurrenciels...
 
