@@ -1,14 +1,94 @@
-\section{Deconvolution for linguistics patterns analysis}
+\section{Experiments}
 
-Sed hendrerit at leo sed tristique. Vestibulum fringilla, nisi id rutrum congue, erat elit hendrerit mi, eget tempus erat nisl sit amet urna. Pellentesque ornare, nunc vel molestie scelerisque, ante augue condimentum orci, sollicitudin sodales odio neque at tortor. Mauris pellentesque ex neque, ut finibus ante pulvinar nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et fermentum urna. Donec rutrum, ex vel interdum mattis, nibh augue mattis magna, vel varius ante ipsum sed diam. Sed dui risus, gravida sit amet ornare nec, lacinia id elit. Nunc consectetur commodo ante semper suscipit. Quisque ullamcorper mauris id arcu placerat pellentesque. Sed sit amet dolor metus.
+\subsection{Z-score Versus Activation-score}
+
+Z-score is one of the most used methods in linguistic statistics. It compares the observed frequency of a word with the frequency expected in case of a "normal" distribution. This calcul gives easily for example the most specific vocabulary of a given author in a contrastive corpora. The highest z-score are the most specific word in this case. This is a simple but strong method to analyze feature on text. It can be also used to classify word sequences according to the global z-score (sum of the score) in the sequence. The mean accuracy of this methods on our data set is around 85\%, that confirm z-score is really meaningful on contrastive data. On the other hand, the deep learning reaches most of time more than 90\% on text classification. It means the training methods can learn also by themselves some sort of linguistic specificities useful to distinguish class of text or authors. We've seen on image that's the role of the convolution. It learns an abstraction on the data to make classification easier. The question is : what is the nature of this abstraction on text ? We going to seen now that the deep learning detect automatically words with hight z-score but apparently it's not this only linguistic marks detected.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=16cm]{img/model.png}
-\caption{Deconvolution model}
-\label{cnn}
+\includegraphics[width=16cm]{img/z-score_activations.png}
+\caption{Latin dataset : Livius Book XXIII Chap. 26 - Z-score Vs Activation-score}
+\label{comparision}
 \end{center}
 \end{figure}
 
-Vestibulum tincidunt sollicitudin tellus, id elementum nunc sollicitudin at. Duis vehicula maximus suscipit. Ut cursus, lorem nec tempor accumsan, ipsum tellus luctus nunc, sit amet commodo nulla purus vel elit. Donec sagittis ultrices auctor. Fusce a faucibus augue. Pellentesque pretium sed lacus eu tincidunt. Cras a ipsum accumsan, laoreet erat eu, mattis nunc. Curabitur ut magna mauris. Pellentesque eget orci ac diam porttitor viverra sed sed ante. In hac habitasse platea dictumst. Proin quis tempus ante, sed porttitor purus. Phasellus suscipit at urna ac facilisis. Nulla molestie ex a congue ultricies. Nunc varius nec mi eu aliquet. Proin velit felis, congue ut ultrices vel, lacinia sit amet odio. Donec viverra est sit amet dignissim rutrum.
+The Figure \ref{comparision} shows us a comparison between z-score and activation-score on a sequence extract form our latin corpora. Here it's an example where Livius\footnote{Lucius Livius Andronicus (c. 284 – c. 205 BC) was a Greco-Roman dramatist and epic poet of the Old Latin period} use some specific words. As we can see, when the z-score is the highest the activation-score around is also very high (word \textit{castra}). But not always, for example small words as \textit{que}, \textit{ad} and \textit{et} are also high in z-score but they not activate the network as the same level. We saw in (reference ****) that deeplearning is more sensible with long words, but we can see also on Figure \ref{comparision} that word like \textit{tenebat}, \textit{multum} or \textit{propius} are totally uncorrelated. If we make the Pearson\footnote{Pearson correlation coefficient measures the linear relationship between two datasets. It has a value between $+1$ and $-1$, where $1$ is total positive linear correlation, $0$ is no linear correlation, and $-1$ is total negative} correlation coefficient on this sequence, we obtain 0.38. Not a hight correlation so, and this example one of the most correlated example of our dataset.
+
+\subsection{Dataset : English}
+
+\begin{quote}
+\textit{[...] \textcolor{red}{\textbf{i enjoyed three moments}} in the film in total , \textcolor{red}{\textbf{and if i am being honest and}} the person \textcolor{red}{\textbf{next to me fell asleep}} in the middle and started PAD during the slow space chasescenes . \textcolor{red}{\textbf{the story failed to}} draw me in and entertain \textcolor{red}{\textbf{me the way}} [...]} 
+\end{quote}
+
+Pos : 
+
+    film : 5.28
+    and : 12.23 (x4)
+    honest : 4
+    entertain : 2.4
+
+Neg:
+
+    cooccurrence : 
+        "and if" et honest
+        "LEM:fall" et asleep
+        story :  -1.61  ;   failed : 1.94    mais "NN LEM:fail" : 4.25
+
+
+\subsection{Dataset : French}
+
+\begin{quote}
+\textit{[...] notre pays \textcolor{red}{\textbf{advienne à}} l'école pour nos enfants, au travail pour l' ensemble de \textcolor{red}{\textbf{nos concitoyens}} pour le climat pour le quotidien de chacune et chacun d' entre vous . \textcolor{red}{\textbf{Ces transformations profondes}} ont commencé et se \textcolor{red}{\textbf{poursuivront}} avec la même force le même rythme la même intensité [...]} 
+\end{quote}
+
+This excerpt from the speech of Emmanuel Macron (31 December 2017) is poorly attributed by the ADT (Z-score) which brings it statistically closer to De Gaulle, and well attributed by the Deep learning that recognizes Macron.
+The error of statistical attribution can be explained by a Gaullist phraseology and the multiplication of linguistic markers strongly indexed by de Gaulle: for example, de Gaulle had the characteristic of making long and literary sentences articulated around conjunctions of coordination as " and "(z-score = 28 for de Gaulle, 2 occurrences in the excerpt). His speech was also more conceptual than the average, and this resulted in an over-use of the articles defined (the, the, the, the) very numerous in the extract (7 occurrences); especially in the feminine singular ("the" Republic, "the" freedom, "the" nation "," the "war, etc., here" the "same force," the "same intensity).
+
+The best performances of deep learning question the linguist and marry perfectly what we know socio-linguistically dynamic speech of Macron.
+
+The most important activation zone of the extract concerns the noun phrase "deep transformation".
+Taken separately, none of the two words of the phrase are very Macronian from a statistical point of view ("transformation" = XXX "deep" = YYY). Better: the syntagm itself is not attested in the corpus of learning of the President (0 occurrence).
+However, it can be seen that the co-occurrence of "transformation" and "deep" amounts to + XXX at Macron: so it is not the occurrence of one word alone, or the other, which is Macronian but the simultaneous appearance of both in the same window.
+However, the co-occurrence of "transformation" and "profound" can not be sufficient to characterize Macron, especially because the co-occurrence of the two words is more frequent at Pompidou for example; other summed indices are required for allocation.
+The second and complementary activation zones of the extract thus concern the two verbs "come" and "will continue".
+From a semantic point of view, the two verbs perfectly conspire, after the phrase "profound transformation", to give the necessary dynamic to a discourse that advocates change. But it is the verb tenses (borne by the morphology of the verbs) that appear to be determining in the analysis.
+The calculation of the grammatical codes co-occurring with the word "transformation" thus indicates that the verbs in the subjunctive and the verbs in the future (and also the nouns) are the privileged codes at Macron. (GRAPH XXX)
+More precisely, the algorithm indicates that, in Macron, when "transformation" is associated with a verb in the subjunctive (here "come"), then there is usually a verb in the future co-present (here "will continue") .
+"Transformation deep", "to come" to the subjunctive, "to continue" to the future: all these elements sign, together, a speech made of promise of action, in the mouth of a young and dynamic president.
+Finally, the graph indicates that "transformation" is especially associated with names in the President: in an extraordinary concentration, the extract lists 11 ("country", "school", "children", "work", "fellow citizens"). , "climate", "daily", "transformations", "force", "rhythm", "intensity").
+
+\subsection{Dataset : Latin}
+
+\begin{quote}
+\textit{[...] tutus tenebat se quoad multum ac diu PAD quattuor milia peditum et quingenti equites in supplementum missi ex PAD sunt . tum refecta tandem spe \textcolor{red}{\textbf{castra propius hostem}} mouit classem que et ipse instrui parari que iubet ad insulas maritimam que oram tutandam . in \textcolor{red}{\textbf{ipso impetu}} mouendarum de [...]} 
+\end{quote}
+
+As historians, Caesar and Livy share a number of specific words:
+- tool words, here (reflexive pronoun) -que (= "and", a coordinator), prepositions in "in", ad "to", ex "out of"
+- names like equites "the riders" or "castra" the camp
+
+The attribution of the sentence to Caesar can not rest on the specificities - that or in or castra, with differences equivalent or inferior to Livy. On the other hand, the differences of se, ex, are superior, as that of equites. Two very Caesarian terms undoubtedly make the difference iubet ("he orders") and ("milia" thousands).
+
+The superior deviations of quattuor ("four"), "castra", "hostem" (the enemy), "impetu" ("the assault") at Titus Live are not enough to switch the attribution to this author .
+
+On the other hand, the Deep Learning "activates" as "liviennes" several zones appearing at the beginning of sentence and corresponding to coherent syntactic structures:
+
+- Tandem reflexes spe castra propius hostem mouit ": then the hope having finally returned, it approaches the camp closer to the camp of the enemy".
+
+despite the fact that castra in hostem mouit is attested only by Tacitus
+
+- in ipso metu: in fear itself ", while in X metu is attested 1x at Caesar and once at Quinte-Curce.
+
+The hypothesis here is twofold:
+
+- the structure tum + participates Ablative Absolute (tum refecta) is more characteristic of Titus Live (3.3, 8 occurrences) than of Caesar (1.7: 3 occurrences), even if it is even more specific of Tacitus (4 , 2: 10 occurrences).
+
+- co-perpetratory castra and impetu networks may also have played a role:
+
+impetu:
+- in Titus Live, appear as cooccurrents lemmas HOSTIS 9.42 and CASTRA 6.75, while HOSTIS only has a gap of 3.41 in Caesar and that CASTRA does not appear in the list of cooccurrents impetu
+
+castra:
+the first cooccurent at Titus Live is HOSTIS (22,72), before CASTRA (10,18), AD (10,85), IN (8,21), IMPETVS (7,35), -QUE (5,86) )
+while in Caesar, IMPETVS does not appear and the scores of all other lemmas are lower except CASTRA (15,15): HOSTIS (8),, AD (10,35), IN (5,17), - THAT (4.79)
 
