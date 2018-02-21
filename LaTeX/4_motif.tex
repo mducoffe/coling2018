@@ -7,32 +7,35 @@ Z-score is one of the most used methods in linguistic statistics. It compares th
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=16cm]{img/z-score_activations.png}
-\caption{Latin dataset : Livius Book XXIII Chap. 26 - Z-score Vs Activation-score}
+\caption{Latin dataset : Livy Book XXIII Chap. 26 - Z-score Vs Activation-score}
 \label{comparision}
 \end{center}
 \end{figure}
 
-The Figure \ref{comparision} shows us a comparison between z-score and activation-score on a sequence extract form our latin corpora. Here it's an example where Livius\footnote{Lucius Livius Andronicus (c. 284 – c. 205 BC) was a Greco-Roman dramatist and epic poet of the Old Latin period} use some specific words. As we can see, when the z-score is the highest the activation-score around is also very high (word \textit{castra}). But not always, for example small words as \textit{que}, \textit{ad} and \textit{et} are also high in z-score but they not activate the network as the same level. We saw in (reference ****) that deeplearning is more sensible with long words, but we can see also on Figure \ref{comparision} that word like \textit{tenebat}, \textit{multum} or \textit{propius} are totally uncorrelated. If we make the Pearson\footnote{Pearson correlation coefficient measures the linear relationship between two datasets. It has a value between $+1$ and $-1$, where $1$ is total positive linear correlation, $0$ is no linear correlation, and $-1$ is total negative} correlation coefficient on this sequence, we obtain 0.38. Not a hight correlation so, and this example one of the most correlated example of our dataset.
+The Figure \ref{comparision} shows us a comparison between z-score and activation-score on a sequence extract form our latin corpora. Here it's an example where Livy\footnote{Titus Livius Patavinus - (64 or 59 BC - AD 12 or 17) -  was a Roman historian.} use some specific words. As we can see, when the z-score is the highest there are sort of activation spike around (word \textit{castra}). But not always, for example small words as \textit{que}, \textit{ad} and \textit{et} are also high in z-score but they not activate the network as the same level. We saw in (reference ****) that deeplearning is more sensible with long words, but we can see also on Figure \ref{comparision} that word like \textit{tenebat}, \textit{multum} or \textit{propius} are totally uncorrelated. The Pearson\footnote{Pearson correlation coefficient measures the linear relationship between two datasets. It has a value between $+1$ and $-1$, where $1$ is total positive linear correlation, $0$ is no linear correlation, and $-1$ is total negative} correlation coefficient tell us on this sequence there is no correlation between z-score and activation-score (with a Pearson of 0.38). This example is one of the most correlated example of our dataset, thus deep learning seems to learn more than a simple z-score.
+
+In order to understand what is the real linguistic marks found by the deep learning (the convolution layer), we did several tests on different languages and our model seems to have the same behaviors on it. We use a french web platforme called Hyperbase\footnote{Hyperbase is an on-line (\textit{http://hyperbase.unice.fr}) linguistic toolbox, that allow to create databases from textual corpus and perform analysis and calculation on it like z-score, cooccurrences, PCA, K-Means distance, ... } to perform all the linguistic statistics tests. 
 
 \subsection{Dataset : English}
+
+The first dataset we used for our experiments is the well known IMDB Movie reviews corpus for sentiment classification. It's 25 000 reviews labeled by positive or negative sentiment with around 230 000 words. With the default methods given by Hyperbase, we can easily show the specific vocabulary of each class (positive/negative), according to the z-score. There is for example the words \textit{too}, \textit{bad}, \textit{no} or \textit{boring} as most specific of negative sentiment. And words \textit{and}, \textit{performance}, \textit{powerful} or \textit{best} for the positive. 
+Is it enough to detect automatically if a new review is positive or not. Let's see an example extracted from a review from December 2017 (not in the training set) on the last American's blockbuster :
 
 \begin{quote}
 \textit{[...] \textcolor{red}{\textbf{i enjoyed three moments}} in the film in total , \textcolor{red}{\textbf{and if i am being honest and}} the person \textcolor{red}{\textbf{next to me fell asleep}} in the middle and started PAD during the slow space chasescenes . \textcolor{red}{\textbf{the story failed to}} draw me in and entertain \textcolor{red}{\textbf{me the way}} [...]} 
 \end{quote}
 
-Pos : 
+In general the z-score is enough to predict the class of this kind of comment. But in this case, the deeplearning seems to do it better, why ? If we sum all the z-score (for negative and positive), positive class obtain a greater score than negative. The words \textit{film}, \textit{and}, \textit{honest} and \textit{entertain} - with scores 5.38, 12.23, 4 and 2.4 - make this example positive. The deep learning has activated different part of this sequence (As we show in bold/red in the exemple). If we take the subsequence \textit{and if i am being honest and}, there are 2 \textit{and} but the first one is followed by \textit{if} and Hyperbase give us 0.84 for \textit{and if} on negative class. It's far from the 12.23 on positive. And if we go further, we can do a cooccurrence analysis on \textit{and if} on the training set. As we see on Figure \ref{data_english}, one of most specific Adjective\footnote{With Hyperbase we can focus on different part of speech } around \textit{and if} is \textit{honest}. Exactly what we found in our example. And around the \textit{fall} verb, there is asleep. Here, \textit{asleep} alone is not really specific of negative review (z-score of 1.13). 
 
-    film : 5.28
-    and : 12.23 (x4)
-    honest : 4
-    entertain : 2.4
+The activation-score here confirm that deep learning seems to focus not only on hight z-score but on more complex pattern and maybe detect the lemma or the part of speech linked to each word. While the embedding is trainable during the learning, it's possible that the final word vectors share this kind of informations. We going to see now that these observations are still valid on other languages and can even be generalized between different activation spike.
 
-Neg:
-
-    cooccurrence : 
-        "and if" et honest
-        "LEM:fall" et asleep
-        story :  -1.61  ;   failed : 1.94    mais "NN LEM:fail" : 4.25
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=16cm]{img/cooc_english2.png}
+\caption{Main cooccurrences for \textit{and if} and \textit{fall} showed by Hyperbase}
+\label{data_english}
+\end{center}
+\end{figure}
 
 
 \subsection{Dataset : French}

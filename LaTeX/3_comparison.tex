@@ -13,7 +13,7 @@ The last layer is a fully connected dense network (with one hidden layer) finish
 Since we use same architecture as image detection, making a deconvolutional layer is really straightforward. There are several methods to visualize the deep internal mecanisms of a neural network. One is called convolutional transposed. Our deconvolutional network use the same embedding and convolution layer as we use for the classification but we replace the finale dense layer by a convolutional transposed layer (also called deconvolution). After we trained the model we setup the weight of each neuron of the deconvolutional network with the learned weights of the classification network. The result is a new network that takes in input a sequence of words and gives us in output all the trained filters of the text classification applied on the given sequence. Then the activation score of each word is calculated as shown in Equation \ref{equation} with $x$ is the size of the embedding, and $y$ the number of applied filters : 
 
 \begin{equation}
-\mathop{\sum^{x}\sum^{y}}_{i=1  j=1}  a_{ij} = s_{w}
+\mathop{\sum^{x}\sum^{y}}_{i=1  j=1}  a_{ij} = s_{n}
 \label{equation}
 \end{equation}
 
