@@ -8,6 +8,14 @@ The Convolutional layer is based on a two-dimensional convolution, the same as u
 
 The last layer is a fully connected dense network (with one hidden layer) finishing on a output size corresponding to the number of classes we attempt to train.
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm]{img/model_classif.png}
+\caption{CNN model}
+\label{cnn}
+\end{center}
+\end{figure}
+
 \subsection{Deconvolution}
 
 Since we use same architecture as image detection, making a deconvolutional layer is really straightforward. There are several methods to visualize the deep internal mecanisms of a neural network. One is known as convolutional transposed. Our deconvolutional network use the same embedding and convolution layer as we use for the classification but we replace the finale dense layer by a convolutional transposed layer (also called deconvolution). After we trained the model we setup the weight of each neuron of the deconvolutional network with the learned weights of the classification network. The result is a new network that takes as input a sequence of words and gives as output all the trained filters of the text classification applied on the given sequence. Then the activation score of each word is calculated as shown in Equation \ref{equation} with $x$ is the size of the embedding, and $y$ the number of applied filters : 
@@ -19,7 +27,7 @@ Since we use same architecture as image detection, making a deconvolutional laye
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=16cm]{img/model.png}
+\includegraphics[width=8cm]{img/model_deconv.png}
 \caption{Deconvolution model}
 \label{cnn}
 \end{center}
