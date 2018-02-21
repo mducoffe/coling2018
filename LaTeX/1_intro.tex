@@ -1,3 +1,22 @@
 \section{Introduction}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec tellus at lectus suscipit porta. Sed ut aliquam tellus. Ut in arcu nec dui tincidunt suscipit in ultrices sem. Curabitur sed nibh quis est tincidunt aliquet. Nullam et nulla lorem. In hac habitasse platea dictumst. Nam aliquam nisi vel orci venenatis venenatis. Nunc aliquet nibh ut odio dapibus, sit amet convallis quam tincidunt. Suspendisse potenti. Vestibulum ut erat ac mauris imperdiet venenatis. Aenean porttitor mollis mi, eu placerat enim bibendum sodales. In vel ligula diam. Aenean faucibus lacinia rutrum. Aenean in risus neque.
+Neural Networks had a tremendous impact on Natural Language Processing. 
+They outperform the performance of many other state-of-the-art systems on a wide range of NLP tasks 
+and are highly used in industrial technologies. Such systems rely on end-to-end training on large amounts of data, 
+making no prior about the linguistic structure. Thus, they step away from Textual Data Analysis used in linguistic as 
+they learn implicit linguistic information automatically. However, we do not know the richness of such information. 
+Do neural networks make use of redundant information, also revealed with traditional textual data analysis? 
+Or do they rely also on complementary linguistic structure, undiscovered by TDA? If so, projecting neural networks 
+features back in the input space would highlight new linguistic structures to improve the analysis of a corpus. 
+Our hypothesis is that deep learning is, of course, sensitive to the linguistic units on which the computation of the 
+key statistical sentences are based, but also sensitive to other phenomena than frequency and other complex linguistic 
+observables that the TDA has more difficult to take into account - as would be linguistic pattern (Mellet et Longrée, 2009).
+Our contribution confronts Textual Data Analysis and Convolutional Neural Networks for text analysis. 
+We hijack deconvolution network for image analysis to offer to the linguistic community a new point of view for text analysis 
+that we denote deconvolution saliency. Our deconvolution saliency corresponds to the sum over the 
+word embedding of the deconvolution projection of a given feature map. Such score provides a heat-map over 
+words in a sentence that promotes the patterns relevant for the classification decision.
+We confront z-scoring and deconvolution saliency on three languages: English, 
+French and Latin. For all our datasets, deconvolution saliency highlights new linguistic observables, unperceivable with z-scoring.
+
+

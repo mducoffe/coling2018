@@ -1,5 +1,42 @@
 \section{Related work}
 
-Mauris ut magna ut diam hendrerit tincidunt. Duis turpis lacus, lacinia ut accumsan a, rutrum eu justo. Donec efficitur purus non leo iaculis elementum. Nulla pulvinar ligula ut pretium vulputate. Mauris non suscipit felis, ac molestie sem. Duis quis lacus sed massa pharetra eleifend non ut urna. Phasellus lobortis mattis pharetra. Phasellus mattis purus non quam molestie tincidunt.
+Convolutional Neural Networks (CNNs) are widely used in the computer vision community for a wide panel of tasks; ranging from image classification, 
+object detection to semantic segmentation. It is a bottom-up approach where we applied on an input image, stacked layers of convolutions, nonlinearities and sub-sampling.
+Encouraged by the success for vision tasks, researchers applied CNNs to text-related problems. The use of CNNs for sentence modeling traces back to (Col-
+lobert and Weston, 2008). Collobert adapted 
+CNNs for various natural language processing (NLP) problems including part of speech tagging, chunking, named entity recognition and semantic labeling (cite). 
+CNNs for NLP work as an analogy between an image and a text representation. Indeed each word is embedded in a vector representation, which is concatenated as a matrix. 
+Word embeddings are not intended to hold spatial information. Thus the width of the convolutional filters is usually the same as the dimension of the word features.
 
-Sed hendrerit at leo sed tristique. Vestibulum fringilla, nisi id rutrum congue, erat elit hendrerit mi, eget tempus erat nisl sit amet urna. Pellentesque ornare, nunc vel molestie scelerisque, ante augue condimentum orci, sollicitudin sodales odio neque at tortor. Mauris pellentesque ex neque, ut finibus ante pulvinar nec. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et fermentum urna. Donec rutrum, ex vel interdum mattis, nibh augue mattis magna, vel varius ante ipsum sed diam. Sed dui risus, gravida sit amet ornare nec, lacinia id elit. Nunc consectetur commodo ante semper suscipit. Quisque ullamcorper mauris id arcu placerat pellentesque. Sed sit amet dolor metus.
+We first discuss our choice of architectures. 
+If Recurrent Neural Networks (\textit{mostly GRU and LSTM}) are known to perform well on a broad range of tasks for text, recent comparisons have confirmed the advantage of CNNs 
+over RNNs when the task at hand is essentially a keyphrase recognition task [1]. Recognition task is at the heart of linguistic interests which mostly focus on contrastive analysis.
+Moreover, CNNs are static architectures that, according to specific tuning, are more robust 
+to vanishing gradient and thus can also model long-term dependency in a sentence (Dauphin et al.,  
+Wen et al. (2016) and Adel and Schutze (2017)). Due to the convolution operators involved, 
+they can be easily parallelized and may be also inferred on CPU, which is a practical solution to get rid of the need of GPUs at test time and widespread our tools.
+
+ All previous works converged to a common assessment: both CNNs and RNNs provide relevant, but different information for text classification. 
+ However, if several works have studied linguistic structures inherent in RNNs, to our knowledge, none of them have focused on CNNs. 
+ A first line of research has extensively studied the interpretability of word embeddings and their semantic representations (). 
+ When it comes to deep architectures, Krizhevsky et al. used LSTMs on character level language as a testbed. They demonstrate the existence of 
+ long-range dependencies on real word data. Their analysis is based on gate activation statistics and is thus global. On another side, Li et al. 
+ provided new visualization tools for recurrent models. They use decoders, t-SNE and first derivative saliency, in order to shed light on how neural models work.
+Our perspectives differ from their line of research, as we do not intend to explain how CNNs work on textual data, but rather use their features 
+to provide complementary information for linguistic analysis.
+
+Although the usage of RNNs is more common, there exist many visualization tools for CNNs analysis, 
+inspired by the computer vision field. Such works may help us highlighting the linguistic features learned by a 
+CNN. Consequently, our method takes inspiration from those works. Visualization models in computer vision mainly consist 
+in inverting latent representations in order to spot active regions or features that are relevant to the classification decision.
+One can either train a decoder network or used backpropagation on the input instance to highlight its most relevant features. 
+While those methods may hold accurate information in their input recovery, they have two main drawbacks, which are the two folds: 
+i) they are computationally expensive : the first method requires to train a model for each latent representation, and the second relies 
+on backpropagation for each submitted sentence. ii) they are highly hyperparameters’ dependent and may require some tuning given the task at hand.
+On the other hand, Deconvolution Networks, proposed by Zeiler et al in ?, is an off the shelf method to project a feature map in the input 
+space. It consists in inverting each convolutional layer iteratively, back to the input space. The inverse of a discrete convolution is 
+computationally challenging. In response, a coarse approximation may be employed which consists of inverting channels and filters weights 
+in a convolutional layer and then transposing their kernel matrix. More details of the deconvolution heuristic are provided in section~\ref{sec:method}.
+Deconvolution holds several advantages. Firstly it induces minimal computational requirements compared to previous visualization methods. 
+Also, it has been used with success for semantic segmentation on images: in ?; Noh et al demonstrate the efficiency of deconvolution networks 
+to predict segmentation masks to identify pixel-wise class labels. Thus deconvolution is able to localize meaningful structure in the input space.
