@@ -73,37 +73,38 @@ More precisely the algorithm indicates that, for Macron, when \textit{transforma
 
 \subsection{Dataset: Latin}
 
-The last dataset we used is based on Latin language. We made a contrastive corpus of 2 millions words with most of the main Latin authors (22 authors). As the French dataset, the learning task here was to be able to predict each author according to new sequence of words. The next example is a excerpt of chapter 26 of the 23th book of Livy :
+The last dataset we used is based on Latin. We assembled a contrastive corpus of 2 million words with 22 principle authors writting in classical Latin. As in the French dataset, the learning task here was to be able to predict each author according to new sequences of words. The next example is a excerpt of chapter 26 of the 23th book of Livy:
 
 \begin{quote}
 \textit{[...] tutus tenebat se quoad multum ac diu PAD quattuor milia peditum et quingenti equites in supplementum missi ex PAD sunt . tum refecta tandem spe \textcolor{red}{\textbf{castra propius hostem}} mouit classem que et ipse instrui parari que iubet ad insulas maritimam que oram tutandam . in \textcolor{red}{\textbf{ipso impetu}} mouendarum de [...]} 
 \end{quote}
 
-The statistics here gives this sequence to Caesar\footnote{Gaius Julius Caesar, 100 BC - 44 BC, usually called Julius Caesar, was a Roman politician and general and a notable author of Latin prose.} but Livy is not so far from the decision. As historians, Caesar and Livy share a number of specific words : for example tool words like \textit{se} (reflexive pronoun) or \textit{que} (a coordinator) and prepositions like \textit{in}, \textit{ad}, \textit{ex}, \textit{of}. There are also names like \textit{equites} (cavalry) or \textit{castra} (fortified camp).
+The statistics here identify this sequence with Caesar\footnote{Gaius Julius Caesar, 100 BC - 44 BC, usually called Julius Caesar, was a Roman politician and general and a notable author of Latin prose.} but Livy is not far off. As historians, Caesar and Livy share a number of specific words: for example tool words like \textit{se} (reflexive pronoun) or \textit{que} (a coordinator) and prepositions like \textit{in}, \textit{ad}, \textit{ex}, \textit{of}. There are also names like \textit{equites} (cavalry) or \textit{castra} (fortified camp).
 
-The attribution of the sentence to Caesar can not be only reliable on specificities (z-score) \textit{que} or \textit{in} or \textit{castra}, with differences equivalent or inferior to Livy. On the other hand, the differences of \textit{se}, \textit{ex}, are superior, as that of \textit{equites}. Two very Caesarian terms undoubtedly make the difference \textit{iubet} (he orders) and \textit{milia} (thousands).
+The attribution of the sentence to Caesar can not only rely only on z-score: \textit{que} or \textit{in} or \textit{castra}, with differences thereof equivalent or inferior to Livy. On the other hand, the differences of \textit{se}, \textit{ex}, are greater, as is that of \textit{equites}. Two very Caesarian terms undoubtedly make the difference \textit{iubet} (he orders) and \textit{milia} (thousands).
 
-The greater score of \textit{quattuor} (four), \textit{castra}, \textit{hostem} (the enemy), \textit{impetu} (the assault) at Livy are not enough to switch the attribution to this author.
+The greater score of \textit{quattuor} (four), \textit{castra}, \textit{hostem} (the enemy), \textit{impetu} (the assault) in Livy are not enough to switch the attribution to this author.
 
-On the other hand, the Deep Learning activate several zones appearing at the beginning of sentence and corresponding to coherent syntactic structures (for Livy) -- \textit{Tandem reflexes spe castra propius hostem mouit} (then the hope having finally returned, it approaches the camp closer to the camp of the enemy) -- despite the fact that \textit{castra} in \textit{hostem mouit} is attested only by Tacitus\footnote{Publius (or Gaius) Cornelius Tacitus, 56 BC - 120 BC, was a senator and a historian of the Roman Empire.}. 
+On the other hand, deeplearning activates several zones appearing at the beginning of sentences and corresponding to coherent syntactic structures (for Livy) -- \textit{Tandem reflexes spe castra propius hostem mouit} (then, hope having finally returned, he moved the camp closer to the camp of the enemy) -- despite the fact that \textit{castra} in \textit{hostem mouit} is attested only by Tacitus\footnote{Publius (or Gaius) Cornelius Tacitus, 56 BC - 120 BC, was a senator and a historian of the Roman Empire.}. 
 
-There are also \textit{in ipso metu} (in fear itself), while \textit{in} followed by \textit{metu} is counted one time with Caesar and one time also with Quinte-Curce\footnote{Quintus Curtius Rufus was a Roman historian, probably of the 1st century, author of his only known and only surviving work, "Histories of Alexander the Great"}.
+There are also \textit{in ipso metu} (in fear itself), while \textit{in} followed by \textit{metu} is counted one time with Caesar and one time also with Quinte-Curce\footnote{Quintus Curtius Rufus was a Roman historian, probably of the 1st century, his only known and only surviving work being "Histories of Alexander the Great"}.
 
-More complex structure are possibly also detected by the deep learning : the structure \textit{tum} + participates Ablative Absolute (\textit{tum refecta}) is more characteristic of Livy (z-score 3.3 with 8 occurrences) than of Caesar (z-score 1.7 with 3 occurrences), even if it is even more specific of Tacitus (z-score 4.2 with 10 occurrences).
+More complex structures are possibly also detected by deeplearning: the structure \textit{tum} + participates Ablative Absolute (\textit{tum refecta}) is more characteristic of Livy (z-score 3.3 with 8 occurrences) than of Caesar (z-score 1.7 with 3 occurrences), even if it is even more specific of Tacitus (z-score 4.2 with 10 occurrences).
 
-Finally and more likely, the co-occurrence between \textit{castra}, \textit{hostem} and \textit{impetu} may have played a major role : Figure \ref{latin}
+Finally and more likely, the co-occurrence between \textit{castra}, \textit{hostem} and \textit{impetu} may have played a major role: Figure \ref{latin}
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=16cm]{img/cooc_latin.png}
-\caption{specific co-occurrences between \textit{impetu} and \textit{castra} showed by Hyperbase}
+\caption{Specific co-occurrences between \textit{impetu} and \textit{castra} showed by Hyperbase.}
 \label{latin}
 \end{center}
 \end{figure}
 
-With Livy, \textit{impetu} appear co-occurrents as lemmas \textit{HOSTIS} (z-score 9.42) and \textit{CASTRA} (z-score 6.75), while \textit{HOSTIS} only has a gap of 3.41 in Caesar and that \textit{CASTRA} does not appear in the list of co-occurrents
+With Livy, \textit{impetu} appears as a co-occurrent with the lemmas \textit{HOSTIS} (z-score 9.42) and \textit{CASTRA} (z-score 6.75), while \textit{HOSTIS} only has a gap of 3.41 in Caesar and that \textit{CASTRA} does not appear in the list of co-occurrents.
 
-For \textit{castra}, the first cooccurent for Livy is \textit{HOSTIS} (z-score 22.72), before \textit{CASTRA} (z-score 10.18), \textit{AD} (z-score 10.85), \textit{IN} (z-score 8.21), \textit{IMPETVS} (z-score 7.35), \textit{QUE} (z-score 5.86) ) while in Caesar, \textit{IMPETVS} does not appear and the scores of all other lemmas are lower except \textit{CASTRA} (z-score 15.15), \textit{HOSTIS} (8),  \textit{AD} (10,35), \textit{IN} (5,17), \textit{QUE} (4.79)
+For \textit{castra}, the first co-occurent for Livy is \textit{HOSTIS} (z-score 22.72), before \textit{CASTRA} (z-score 10.18), \textit{AD} (z-score 10.85), \textit{IN} (z-score 8.21), \textit{IMPETVS} (z-score 7.35), \textit{QUE} (z-score 5.86) ) while in Caesar, \textit{IMPETVS} does not appear and the scores of all other lemmas are lower except \textit{CASTRA} (z-score 15.15), \textit{HOSTIS} (8),  \textit{AD} (10,35), \textit{IN} (5,17), \textit{QUE} (4.79).
 
-Tout se passe donc bien comme si le Deep Learning arrivait ici à prendre en compte simultanément la spécificité, les structures de phrase et les réseaux cooccurrenciels...
+Thus, all is as it should be if the deeplearning network manages to simultaniously account for specificity, phrase structure, and co-occurence networks\ldots
+
 
