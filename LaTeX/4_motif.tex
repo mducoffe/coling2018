@@ -40,25 +40,28 @@ The activation-score here confirm that deep learning seems to focus not only on 
 
 \subsection{Dataset : French}
 
+The french data set is about political discourses. It's a corpus of 2.5 millions of words of French president from 1958 (with C. de Gaulle, the first president of the fifth republic) to 2018 with the first discourses of E. Macron. In this corpus we only remove the December 31 speech of E. Macron to use it as test data set. On this discourse E. Macron is mainly recognized by the deeplearning (The training task was to be able to predict the correct president). To achieve this task the deep learning seems to succeed to find really complex pattern specific to E. Macron. For example in this sequence :
+
 \begin{quote}
 \textit{[...] notre pays \textcolor{red}{\textbf{advienne à}} l'école pour nos enfants, au travail pour l' ensemble de \textcolor{red}{\textbf{nos concitoyens}} pour le climat pour le quotidien de chacune et chacun d' entre vous . \textcolor{red}{\textbf{Ces transformations profondes}} ont commencé et se \textcolor{red}{\textbf{poursuivront}} avec la même force le même rythme la même intensité [...]} 
 \end{quote}
 
-This excerpt from the speech of Emmanuel Macron (31 December 2017) is poorly attributed by the ADT (Z-score) which brings it statistically closer to De Gaulle, and well attributed by the Deep learning that recognizes Macron.
-The error of statistical attribution can be explained by a Gaullist phraseology and the multiplication of linguistic markers strongly indexed by de Gaulle: for example, de Gaulle had the characteristic of making long and literary sentences articulated around conjunctions of coordination as " and "(z-score = 28 for de Gaulle, 2 occurrences in the excerpt). His speech was also more conceptual than the average, and this resulted in an over-use of the articles defined (the, the, the, the) very numerous in the extract (7 occurrences); especially in the feminine singular ("the" Republic, "the" freedom, "the" nation "," the "war, etc., here" the "same force," the "same intensity).
+The Z-score brings statistically closer to De Gaulle than E. Macron. The error of statistical attribution can be explained by a Gaullist phraseology and the multiplication of linguistic markers strongly indexed by de Gaulle: for example, de Gaulle had the characteristic of making long and literary sentences articulated around conjunctions of coordination as \textit{et} (z-score = 28 for de Gaulle, 2 occurrences in the excerpt). His speech was also more conceptual than the average, and this resulted in an over-use of the articles defined \textit{le}, \textit{la}, \textit{l\'}, \textit{les}) very numerous in the extract (7 occurrences); especially in the feminine singular (\textit{la republique}, \textit{la liberté}, \textit{la nation}, \textit{la guerre}, etc., here we have \textit{la même force}, \textit{la même intensité}.
 
-The best performances of deep learning question the linguist and marry perfectly what we know socio-linguistically dynamic speech of Macron.
+Les meilleures performances du deep learning interrogent quant à elle le linguiste et épouse parfaitement ce que l'on sait socio-linguistiquement du discours dynamique de Macron.
 
-The most important activation zone of the extract concerns the noun phrase "deep transformation".
-Taken separately, none of the two words of the phrase are very Macronian from a statistical point of view ("transformation" = XXX "deep" = YYY). Better: the syntagm itself is not attested in the corpus of learning of the President (0 occurrence).
-However, it can be seen that the co-occurrence of "transformation" and "deep" amounts to + XXX at Macron: so it is not the occurrence of one word alone, or the other, which is Macronian but the simultaneous appearance of both in the same window.
-However, the co-occurrence of "transformation" and "profound" can not be sufficient to characterize Macron, especially because the co-occurrence of the two words is more frequent at Pompidou for example; other summed indices are required for allocation.
-The second and complementary activation zones of the extract thus concern the two verbs "come" and "will continue".
-From a semantic point of view, the two verbs perfectly conspire, after the phrase "profound transformation", to give the necessary dynamic to a discourse that advocates change. But it is the verb tenses (borne by the morphology of the verbs) that appear to be determining in the analysis.
-The calculation of the grammatical codes co-occurring with the word "transformation" thus indicates that the verbs in the subjunctive and the verbs in the future (and also the nouns) are the privileged codes at Macron. (GRAPH XXX)
-More precisely, the algorithm indicates that, in Macron, when "transformation" is associated with a verb in the subjunctive (here "come"), then there is usually a verb in the future co-present (here "will continue") .
-"Transformation deep", "to come" to the subjunctive, "to continue" to the future: all these elements sign, together, a speech made of promise of action, in the mouth of a young and dynamic president.
-Finally, the graph indicates that "transformation" is especially associated with names in the President: in an extraordinary concentration, the extract lists 11 ("country", "school", "children", "work", "fellow citizens"). , "climate", "daily", "transformations", "force", "rhythm", "intensity").
+The most important activation zone of the extract concerns the nominal syntagm \textit{transformations profondes}. Taken separately, none of the two words of the phrase are very Macronian from a statistical point of view (\textit{transformations} = 1.9 \textit{profondes} = 2.9). Better: the syntagm itself is not attested in the corpus of learning of the President (0 occurrence). However, it can be seen that the co-occurrence of \textit{transformation} and \textit{profondes} amounts to 4.81 at Macron: so it is not the occurrence of one word alone, or the other, which is Macronian but the simultaneous appearance of both in the same window. The second and complementary activation zones of the extract thus concern the two verbs \textit{advienne} and \textit{poursuivront}. From a semantic point of view, the two verbs perfectly conspire, after the phrase \textit{transformations profondes}, to give the necessary dynamic to a discourse that advocates change. But it is the verb tenses (borne by the morphology of the verbs) that appear to be determining in the analysis. The calculation of the grammatical codes co-occurring with the word \textit{transformations} thus indicates that the verbs in the subjunctive and the verbs in the future (and also the nouns) are the privileged codes at Macron (Figure \ref{macron}). 
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=10cm]{img/macron_cooc.png}
+\caption{Main part-of-speech cooccurrences for \textit{transformations} showed by Hyperbase}
+\label{macron}
+\end{center}
+\end{figure}
+
+
+More precisely, the algorithm indicates that, in Macron, when \textit{transformation} is associated with a verb in the subjunctive (here \textit{advienne}), then there is usually a verb in the future co-present (here \textit{poursuivront}). \textit{transformations profondes}, \textit{advienne} to the subjunctive, \textit{poursuivront} to the future: all these elements sign, together, a speech made of promise of action, in the mouth of a young and dynamic president. Finally, the graph indicates that \textit{transformations} is especially associated with names in the President: in an extraordinary concentration, the extract lists 11 (\textit{pays}, \textit{école}, \textit{enfants}, \textit{travail}, \textit{concitoyens}, \textit{climat}, \textit{quotidien}, \textit{transformations}, \textit{force}, \textit{rythme}, \textit{intensité}).
 
 \subsection{Dataset : Latin}
 
