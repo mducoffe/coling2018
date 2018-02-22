@@ -7,13 +7,13 @@ We propose a deep neural model to capture linguistics patterns in text. This mod
 
 The Convolutional layer is based on a two-dimensional convolution, the same as used for image convolution, but with a fixed width equal to the embedding size. Indeed, word embeddings are not intended to hold spatial information. With this setting, our usage of the two-dimensional convolution is in reality the same as a one-dimensional convolution (the default settings for text). The only parameter we adjust here is the height of the filter corresponding to the number of words we want to put in the filter. 
 
-they can be easily parallelized and may also be be easily used by the CPU, which is a practical solution for avoiding the use of GPUs at test time and thus providing wider access to our tools.
+Using CNNs has two advantages in our context. Firstly, due to the convolution operators involved, they can be easily parallelized and may also be be easily used on CPU, which is a practical solution for avoiding the use of GPUs at test time and thus providing wider access to our tools.
 
 %The goal of this approach is to be able to use the standard image deconvolution (also called transposed convolutions) for our model on text.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=8cm]{img/model_classif.png}
+\includegraphics[width=8cm]{img/model_classif2.png}
 \caption{CNN model}
 \label{cnn}
 \end{center}
