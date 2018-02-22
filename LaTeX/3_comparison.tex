@@ -3,11 +3,30 @@
 
 \subsection{CNN for Text Classification}
 
-We propose a deep neural model to capture linguistics patterns in text. This model is based on Convolutional Neural Networks with an embedding layer for word representations, one convolutional with pooling layer and non-linearities. Finally we have two fully-connected layers. The final output size corresponds to the number of classes we attempt to train. The model is trained by cross-entropy with an Adam optimizer. Figure \ref{cnn} shows the global structure of our architecture. The input is a sequence of words $ w_{1}, w_{2} ... w_{n} $ and the output contains class probabilities (for text classification). The embedding is built on top of a Word2Vec architecture trained on a Skip-gram model. Our text tokenizer keeps all the words to make sure all linguistic material is detected at the end by the model. This embedding is also finetuned by the model to attain optimal text-classification accuracy. 
+We propose a deep neural model to capture linguistics patterns in text. 
+This model is based on Convolutional Neural Networks with an embedding layer for word representations, one convolutional with pooling layer and non-linearities. Finally we have two fully-connected layers. The final output size corresponds to the number of classes. The model is trained by cross-entropy with an Adam optimizer. 
+Figure \ref{cnn} shows the global structure of our architecture. The input is a sequence of words $ w_{1}, w_{2} ... w_{n} $ and the output contains class probabilities (for text classification). 
 
-The Convolutional layer is based on a two-dimensional convolution, the same as used for image convolution, but with a fixed width equal to the embedding size. Indeed, word embeddings are not intended to hold spatial information. With this setting, our usage of the two-dimensional convolution is in reality the same as a one-dimensional convolution (the default settings for text). The only parameter we adjust here is the height of the filter corresponding to the number of words we want to put in the filter. 
+The embedding is built on top of a Word2Vec architecture, here we consider a Skip-gram model. This embedding is also finetuned by the model to attain optimal text-classification accuracy. 
+Notice that we do not use lemmatisation, as in (Collobert), thus the linguistic material which is automatically detected does not rely on any prior on the part of speech.
+%without any prior on the lemma form.
+%Our text tokenizer keeps all the words to make sure all linguistic material is detected at the end by the model. 
 
-Using CNNs has two advantages in our context. Firstly, due to the convolution operators involved, they can be easily parallelized and may also be be easily used on CPU, which is a practical solution for avoiding the use of GPUs at test time and thus providing wider access to our tools.
+% The Convolutional layer is based on a two-dimensional convolution, the same as used for image convolution, 
+% but with a fixed width equal to the embedding size. Indeed, word embeddings are not intended to hold spatial information. 
+% With this setting, our usage of the two-dimensional convolution is in reality the same as a one-dimensional convolution (the default settings for text). 
+% The only parameter we adjust here is the height of the filter corresponding to the number of words we want to put in the filter. 
+In computer vision, we consider images as 2-dimensional isotropic signals. 
+A text representation may also be considered as a matrix: each word is embedded in a feature vector and their concatenation builds a matrix. 
+However, we cannot assume both dimensions - the sequence of words and their embedding representation - are isotropic. Thus the filters of CNNs 
+for text typically differ from their counterparts designed for images.
+%Indeed, in vision, the filters slide over local patches of a picture. 
+Consequently in text, the width of the filter is usually equal to the dimension 
+of the embedding, as illustrated with the red, yellow, blue and green filters in figure~\ref{cnn}
+
+Using CNNs hold another advantage in our context: due to the convolution operators involved, they can be easily parallelized and may also be be easily used on CPU, 
+which is a practical solution for avoiding the use of GPUs at test time. 
+%This will provide wider access to our linguistic analysis.
 
 %The goal of this approach is to be able to use the standard image deconvolution (also called transposed convolutions) for our model on text.
 

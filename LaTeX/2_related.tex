@@ -2,7 +2,9 @@
 
 Convolutional Neural Networks (CNNs) are widely used in the computer vision community for a wide panel of tasks: ranging from image classification, 
 object detection to semantic segmentation. It is a bottom-up approach where we applied an input image, stacked layers of convolutions, non-linearities and sub-sampling.
-Encouraged by the success for vision tasks, researchers applied CNNs to text-related problems. The use of CNNs for sentence modeling traces back to \cite{Coll:08}. Collobert adapted 
+
+Encouraged by the success for vision tasks, researchers applied CNNs to text-related problems \cite{kalchbrenner2014convolutional, kim2014convolutional}. The use of CNNs for sentence modeling traces back to \cite{Coll:08}. Collobert adapted 
+
 CNNs for various NLP problems including Part-of-Speech tagging, chunking, Named Entity Recognition and semantic labeling (cite). 
 CNNs for NLP work as an analogy between an image and a text representation. Indeed each word is embedded in a vector representation, then several words build a matrix (concatenation of the vectors). 
 
@@ -12,11 +14,12 @@ CNNs for NLP work as an analogy between an image and a text representation. Inde
 
 We first discuss our choice of architectures. 
 If Recurrent Neural Networks (\textit{mostly GRU and LSTM}) are known to perform well on a broad range of tasks for text, recent comparisons have confirmed the advantage of CNNs 
-over RNNs when the task at hand is essentially a keyphrase recognition task [1]. 
+over RNNs when the task at hand is essentially a keyphrase recognition task \cite{yin2017comparative}. 
 
 In Textual Mining, we aim at highlighting linguistics patterns in order to analyze their constrast: specificities and similarities in a corpus \cite{Fel:07, Leb:98}. It mostly relies on frequential based methods such as z-scoring. However, such existing methods have so far encountered difficulties in underlining more challenging linguistic knowledge, which has yet been empirically observed as for instance syntactical motifs \cite{mellet:09}.
 
-In that context, supervised classification, especially CNNs, may be exploited for corpus analysis. Indeed, CNN learns automatically parameters to cluster similar instances and drive away instances from different categories. Eventually, their prediction relies on features which inferred specificities and similarities in a corpus. Projecting such features in the word embedding will reveal relevant spots and may automatize the discovery of new linguistic structure as the previously cited, syntactical motifs. Moreover, CNNs hold other advantages for linguistic analysis. They are static architectures that, according to specific settings are more robust to vanishing gradient, and thus can also model long-term dependency in a sentence (Dauphin et al., Wen et al. 2016, and Adel and Schutze). Such a property may help to detect structures relying on different parts of a sentence.
+In that context, supervised classification, especially CNNs, may be exploited for corpus analysis. Indeed, CNN learns automatically parameters to cluster similar instances and drive away instances from different categories. Eventually, their prediction relies on features which inferred specificities and similarities in a corpus. Projecting such features in the word embedding will reveal relevant spots and may automatize the discovery of new linguistic structure as the previously cited, syntactical motifs. Moreover, CNNs hold other advantages for linguistic analysis. They are static architectures that, according to specific settings are more robust to vanishing gradient, 
+and thus can also model long-term dependency in a sentence \cite{dauphin2017language,wen2017network, adel2017global}. Such a property may help to detect structures relying on different parts of a sentence.
 
 % \textcolor{red}{Fred: Encore, la ligne qui suit est trop detaillee pour etre la et on ne voit pas le lien avec le reste du paragraphe}
 % Due to the convolution operators involved, 
@@ -25,8 +28,8 @@ In that context, supervised classification, especially CNNs, may be exploited fo
  All previous works converged to a shared assessment: both CNNs and RNNs provide relevant, but different kinds of information for text classification. 
  However, though several works have studied linguistic structures inherent in RNNs, to our knowledge, none of them have focused on CNNs. 
  A first line of research has extensively studied the interpretability of word embeddings and their semantic representations (cite). 
- When it comes to deep architectures, Krizhevsky et al. (cite) used LSTMs on character level language as a testbed. They demonstrate the existence of 
- long-range dependencies on real word data. Their analysis is based on gate activation statistics and is thus global. On another side, Li et al. (cite)
+ When it comes to deep architectures, Karpathy et al. \cite{karpathy2015visualizing} used LSTMs on character level language as a testbed. They demonstrate the existence of 
+ long-range dependencies on real word data. Their analysis is based on gate activation statistics and is thus global. On another side, Li et al. \cite{li2015visualizing}
  provided new visualization tools for recurrent models. They use decoders, t-SNE and first derivative saliency, in order to shed a light on how neural models work.
 Our perspective differs from their line of research, as we do not intend to explain how CNNs work on textual data, but rather use their features 
 to provide complementary information for linguistic analysis.
@@ -39,10 +42,10 @@ One can either train a decoder network or use backpropagation on the input insta
 While those methods may hold accurate information in their input recovery, they have two main drawbacks: 
 i) they are computationally expensive: the first method requires training a model for each latent representation, and the second relies 
 on backpropagation for each submitted sentence. ii) they are highly hyperparameter dependent and may require some finetuning depending on the task at hand.
-On the other hand, Deconvolution Networks, proposed by Zeiler et al (cite) ?, provide an off-the-shelf method to project a feature map in the input 
+On the other hand, Deconvolution Networks, proposed by Zeiler et al \cite{zeiler2014visualizing}, provide an off-the-shelf method to project a feature map in the input 
 space. It consists in inverting each convolutional layer iteratively, back to the input space. The inverse of a discrete convolution is 
 computationally challenging. In response, a coarse approximation may be employed which consists of inverting channels and filter weights 
 in a convolutional layer and then transposing their kernel matrix. More details of the deconvolution heuristic are provided in section~\ref{sec:method}.
 Deconvolution holds several advantages. First, it induces minimal computational requirements compared to previous visualization methods. 
-Also, it has been used with success for semantic segmentation on images: in ?; Noh et al (cite) demonstrate the efficiency of deconvolution networks 
+Also, it has been used with success for semantic segmentation on images: in \cite{noh2015learning}; Noh et al demonstrate the efficiency of deconvolution networks 
 to predict segmentation masks to identify pixel-wise class labels. Thus deconvolution is able to localize meaningful structure in the input space.
