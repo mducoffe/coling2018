@@ -77,6 +77,20 @@ L. Vanni\textsuperscript{1}, V. Elango\textsuperscript{2}, C. Aguilar\textsupers
 \section{Supplemental Material}
 \label{sec:supplemental}
 
+In order to make our experiments reproductible, we going to detail here all the hyperparameters used in our architecture. The neural network is written in python with the library Keras (an tensorflow as backend). 
 
+The embedding use a Word2Vec implementation given by the gensim Library. Here we use the SkipGram model with a window size of 10 words and output vectors of 128 values (embedding dimension).
+
+The textual datas are tokenized by a homemade tokensizer (witch work on English, Latin and French). The corpus is splited into 50 length sequence of words (punctuation is keeped) and each word is converted inta an uniq vectore of 128 value.
+
+The first layer of our model takes the text sequence (as word vectors) and apply on it a weight corresponding to our WordToVec values. Those weight are still trainable during the train of the model.
+
+The second layer is the convolution, a Conv2D in Keras with 512 filters of size $3*128$ (filtering three words at time), with a Relu activation method. Then, there is the Maxpooling (MaxPooling2D) 
+
+(The deconvolution model is identical until here. We replace the rest of the classification model (Dense) by a transposed convolution (Conv2DTranspose).)
+
+The last layers of the model are a Dense layers. One hidden layer of 100 neurons with a Relu activation and one final layer of size eaqual to the number of class with a softmax activation.
+
+All experiments in this paper share the same architecture and the same hyperparameters, and are trained with a cross-entropy method (with an Adam optimizer) with 90\% of the dataset for the training data and 10\% for the validation. The all the tests in this paper are done with new data not included in the original dataset.
 
 \end{document}

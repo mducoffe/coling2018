@@ -1,8 +1,29 @@
 \section{Experiments}
+\label{sec:experiments}
 
 \subsection{Z-score Versus Activation-score}
 
-Z-score is one of the most used methods in linguistic statistics. It compares the observed frequency of a word with the frequency expected in the case of a "normal" distribution. This calculation readily gives, for example, the most specific vocabulary of a given author in a contrastive corpus. The highest z-scores are the most specific words in this case. This is a simple but strong method for analyzing features of text. It can also be used to classify word sequences according to the global z-score (sum of the score) in the sequence. The mean accuracy of this method on our data set is around 85\%, which confirms z-score is in fact meaningful on contrastive data. On the other hand, most of the time deep learning attains greater than 90\% accuracy in text classification. This means that the training methods can learn also on their own some of the linguistic specificities useful in distinguishing between classes of text or authors. We've seen in work on images that thi is the role of convolution. It learns an abstraction of the data to make classification easier. The question is: what is the nature of this abstraction on text? We will see now that deep learning detects automatically words with hight z-score but apparently this is not the only linguistic structure detected.
+Z-score is one of the most used methods in linguistic statistics. It compares the observed frequency of a word with the frequency expected in the case of a "normal" distribution. This calculation readily gives, for example, the most specific vocabulary of a given author in a contrastive corpus. The highest z-scores are the most specific words in this case. This is a simple but strong method for analyzing features of text. It can also be used to classify word sequences according to the global z-score (sum of the score) in the sequence. The mean accuracy of this method on our data set is around 87\%, which confirms z-score is in fact meaningful on contrastive data. On the other hand, most of the time deep learning attains greater than 90\% accuracy in text classification (As shown on Figure \ref{benchmark} -- a benchmark of our three datasets detailed in the next subsections \ref{subsec:dataset:en},\ref{subsec:dataset:fr},\ref{subsec:dataset:lt}). 
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{|l|c|c|}
+  \hline
+  ~ & z-score & Deep Learning \\
+  \hline
+  Latin & 84\% & 93\% \\
+  French & 89\% & 91\% \\
+  English & 90\% & 97\% \\
+  \hline
+\end{tabular}
+\caption{Prediction task acuray with z-score and Deep Learning}
+\label{benchmark}
+\end{center}
+\end{figure}
+
+This means that the training methods can learn also on their own some of the linguistic specificities useful in distinguishing between classes of text or authors. We've seen in work on images that thi is the role of convolution. It learns an abstraction of the data to make classification easier. The question is: what is the nature of this abstraction on text? We will see now that deep learning detects automatically words with hight z-score but apparently this is not the only linguistic structure detected.
+
+To make the two values comparable, we normalize them with a maximum score of around $+38$ and a minimum of $-38$. This interval gives two thresholds for the z-score: over $2$ a word is considered as specific and over $5$ it's strongly specific (and the oposite with negative values). For the activation score it's just a matter of activation strength.
 
 \begin{figure}[h]
 \begin{center}
@@ -12,11 +33,13 @@ Z-score is one of the most used methods in linguistic statistics. It compares th
 \end{center}
 \end{figure}
 
-The Figure \ref{comparision} shows us a comparison between z-score and activation-score on a sequence extract form our latin corpora (Livy Book XXIII Chap. 26). Here it's an example of specific word use by Livy\footnote{Titus Livius Patavinus -- (64 or 59 BC - AD 12 or 17) -- was a Roman historian.}. As we can see, when the z-score is the highest there is a sort of activation spike around the word \textit{castra}. However, this is not always the case: for example small words as \textit{que}, \textit{ad} and \textit{et} are also high in z-score but they do not activate the network at the same level. We saw in (reference ****) that deeplearning is more sensitive to long words, but we can see also on Figure \ref{comparision} that words like \textit{tenebat}, \textit{multum} or \textit{propius} are totally uncorrelated. The Pearson\footnote{Pearson correlation coefficient measures the linear relationship between two datasets. It has a value between $+1$ and $-1$, where $1$ is total positive linear correlation, $0$ is no linear correlation, and $-1$ is total negative} correlation coefficient tells us that in this sequence there is no correlation between z-score and activation-score (with a Pearson of 0.38). This example is one of the most correlated examples of our dataset, thus deep learning seems to learn more than a simple z-score.
+The Figure \ref{comparision} shows us a comparison between z-score and activation-score on a sequence extract form our Latin corpora (Livy Book XXIII Chap. 26). 
+Here it's an example of specific word use by Livy\footnote{Titus Livius Patavinus -- (64 or 59 BC - AD 12 or 17) -- was a Roman historian.}. As we can see, when the z-score is the highest there is a sort of activation spike (for example around the word \textit{castra}). However, this is not always the case: for example small words as \textit{que}, \textit{ad} and \textit{et} are also high in z-score but they do not activate the network at the same level. We saw in (reference ****) that deeplearning is more sensitive to long words, but we can see also on Figure \ref{comparision} that words like \textit{tenebat}, \textit{multum} or \textit{propius} are totally uncorrelated. The Pearson\footnote{Pearson correlation coefficient measures the linear relationship between two datasets. It has a value between $+1$ and $-1$, where $1$ is total positive linear correlation, $0$ is no linear correlation, and $-1$ is total negative} correlation coefficient tells us that in this sequence there is no correlation between z-score and activation-score (with a Pearson of 0.38). This example is one of the most correlated examples of our dataset, thus deep learning seems to learn more than a simple z-score.
 
 In order to understand what the real linguistic marks found by deeplearning are (the convolution layer), we did several tests on different languages and our model seems to have the same behavior in all of them. We used a French web-platform called Hyperbase\footnote{Hyperbase is an on-line (\textit{http://hyperbase.unice.fr}) linguistic toolbox, which allows the creation of databases from textual corpus and the performing of analysis and calculations such z-score, cooccurrences, PCA, K-Means distance, ... } to perform all the linguistic statistics tests. 
 
 \subsection{Dataset: English}
+\label{subsec:dataset:en}
 
 The first dataset we used for our experiments is the well known IMDB Movie review corpus for sentiment classification. It consists of 25,000 reviews labeled by positive or negative sentiment with around 230,000 words. With the default methods given by Hyperbase, we can easily show the specific vocabulary of each class (positive/negative), according to the z-score. There are for example the words \textit{too}, \textit{bad}, \textit{no} or \textit{boring} as most indicitive of negative sentiment, and the words \textit{and}, \textit{performance}, \textit{powerful} or \textit{best} for positive. 
 Is it enough to detect automatically if a new review is positive or not? Let's see an example excerpted from a review from December 2017 (not in the training set) on the last American blockbuster:
@@ -48,6 +71,7 @@ In addition, we have the same behavior with the verb \textit{fall}. There is \te
 The activation-score here confirms that deep learning seems to focus not only on high z-score but on more complex patterns and maybe detects the lemma or the part of speech linked to each word. While the embedding is modifiable during the learning, it's possible that the final word vectors share this kind of information. We will see now that these observations are still valid for other languages and can even be generalized between different activation spikes.
 
 \subsection{Dataset: French}
+\label{subsec:dataset:fr}
 
 The French data set consists of political speeches. It's a corpus of 2.5 millions of words of French Presidents from 1958 (with C. de Gaulle, the first President of the Fifth Republic) to 2018 with the first speeches by Macron. In this corpus we removed Macron's speech from the 31st of December 2017, to use it as a test data set. In this speech, the deeplearning network primarily recognizes E. Macron (the training task was to be able to predict the correct President). To achieve this task the deeplearning network seems to succeed in finding really complex patterns specific to E. Macron. For example in this sequence :
 
@@ -81,6 +105,7 @@ The most important activation zone of the excerpt concerns the nominal syntagm \
 More precisely the algorithm indicates that, for Macron, when \textit{transformation} is associated with a verb in the subjunctive (here \textit{advienne}), then there is usually a verb in the future co-present (here \textit{poursuivront}). \textit{transformations profondes}, \textit{advienne} to the subjunctive, \textit{poursuivront} to the future: all these elements together form a speech promising action, from the mouth of a young and dynamic President. Finally, the graph indicates that \textit{transformations} is especially associated with nouns in the President's speeches: in an extraordinary concentration, the excerpt lists 11 (\textit{pays}, \textit{école}, \textit{enfants}, \textit{travail}, \textit{concitoyens}, \textit{climat}, \textit{quotidien}, \textit{transformations}, \textit{force}, \textit{rythme}, \textit{intensité}).
 
 \subsection{Dataset: Latin}
+\label{subsec:dataset:lt}
 
 The last dataset we used is based on Latin. We assembled a contrastive corpus of 2 million words with 22 principle authors writting in classical Latin. As in the French dataset, the learning task here was to be able to predict each author according to new sequences of words. The next example is a excerpt of chapter 26 of the 23th book of Livy:
 

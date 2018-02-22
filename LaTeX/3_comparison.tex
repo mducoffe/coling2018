@@ -1,4 +1,5 @@
 \section{Model}
+\label{sec:model}
 
 \subsection{Text Classification}
 
@@ -6,7 +7,9 @@ We propose a deep neural model to capture linguistics paterns in text. This mode
 
 The Convolutional layer is based on a two-dimensional convolution, the same as used for picture convolution, but with a fixed width corresponding to the max width (this size is actually equal to the embedding size). With this setting, our usage of the two-dimensional convolution is in reallity the same as a one-dimensional convolution (the default convolutionnal layer for text). The only parameter we adjust here is the height of the filter corresponding to the number of words we want to put in the filter. The goal of this approach is to be able to use the standard picture deconvolution (also called transposed convolutions\footnote{transposed convolutions works by swapping the forward and backward passes of a convolution. It's a transformation that going in the opposite direction of a normal convolution}) methods for our model on text.
 
-The last layer is a fully connected dense network (with one hidden layer) with a softmax finishing on a output size corresponding to the number of classes we attempt to train.
+For our needs, we limited the convolutional part at one layer only. The performances are good enough, but it's scallable and we can add more layers according to the dataset complexity.
+
+The last layer is a fully connected dense network with a softmax finishing on a output size corresponding to the number of classes we attempt to train. The model is trained by cross-entropy with an Adam optimizer.
 
 \begin{figure}[h]
 \begin{center}
@@ -18,7 +21,7 @@ The last layer is a fully connected dense network (with one hidden layer) with a
 
 \subsection{Deconvolution}
 
-Since we use same architecture as image detection, making a deconvolutional layer is really straightforward. There are several methods to visualize the deep internal mecanisms of a neural network. One is known as convolutional transposed. Our deconvolutional network use the same embedding and convolution layer as we use for the classification but we replace the finale dense layer by a convolutional transposed layer (also called deconvolution). After we trained the model we setup the weight of each neuron of the deconvolutional network with the learned weights of the classification network. The result is a new network that takes as input a sequence of words and gives as output all the trained filters of the text classification applied on the given sequence. Then the activation score of each word is calculated as shown in Equation \ref{equation} with $x$ is the size of the embedding, and $y$ the number of applied filters : 
+Since we use same architecture as image detection, making a deconvolutional layer is really straightforward. There are several methods to visualize the deep internal mecanisms of a neural network. One is known as convolutional transposed. Our deconvolutional network use the same embedding and convolution layer as we use for the classification but we replace the finale dense layer by a transposed convolution layer. After we trained the model we setup the weight of each neuron of the deconvolutional network with the learned weights of the classification network. The result is a new network that takes as input a sequence of words and gives as output all the trained filters of the text classification applied on the given sequence. Then the activation score of each word is calculated as shown in Equation \ref{equation} with $x$ is the size of the embedding, and $y$ the number of applied filters : 
 
 \begin{equation}
 \mathop{\sum^{x}\sum^{y}}_{i=1  j=1}  a_{ij} = s_{n}
