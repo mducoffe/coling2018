@@ -2,8 +2,7 @@
 
 Convolutional Neural Networks (CNNs) are widely used in the computer vision community for a wide panel of tasks: ranging from image classification, 
 object detection to semantic segmentation. It is a bottom-up approach where we applied an input image, stacked layers of convolutions, non-linearities and sub-sampling.
-Encouraged by the success for vision tasks, researchers applied CNNs to text-related problems. The use of CNNs for sentence modeling traces back to (Col-
-lobert and Weston, 2008). Collobert adapted 
+Encouraged by the success for vision tasks, researchers applied CNNs to text-related problems. The use of CNNs for sentence modeling traces back to \cite{Coll:08}. Collobert adapted 
 CNNs for various NLP problems including Part-of-Speech tagging, chunking, Named Entity Recognition and semantic labeling (cite). 
 CNNs for NLP work as an analogy between an image and a text representation. Indeed each word is embedded in a vector representation, then several words build a matrix (concatenation of the vectors). 
 
@@ -15,7 +14,7 @@ We first discuss our choice of architectures.
 If Recurrent Neural Networks (\textit{mostly GRU and LSTM}) are known to perform well on a broad range of tasks for text, recent comparisons have confirmed the advantage of CNNs 
 over RNNs when the task at hand is essentially a keyphrase recognition task [1]. 
 
-In Textual Mining, we aim at highlighting linguistics patterns in order to analyze their constrast: specificities and similarities in a corpus (\cite{Aho:72}). It mostly relies on frequential based methods such as z-scoring. However, such existing methods have so far encountered difficulties in underlining more challenging linguistic knowledge, which has yet been empirically observed.  As an example, we can cite syntactical motifs from (Mellet et Longree, 2009).
+In Textual Mining, we aim at highlighting linguistics patterns in order to analyze their constrast: specificities and similarities in a corpus \cite{Fel:07, Leb:98}. It mostly relies on frequential based methods such as z-scoring. However, such existing methods have so far encountered difficulties in underlining more challenging linguistic knowledge, which has yet been empirically observed as for instance syntactical motifs \cite{mellet:09}.
 
 In that context, supervised classification, especially CNNs, may be exploited for corpus analysis. Indeed, CNN learns automatically parameters to cluster similar instances and drive away instances from different categories. Eventually, their prediction relies on features which inferred specificities and similarities in a corpus. Projecting such features in the word embedding will reveal relevant spots and may automatize the discovery of new linguistic structure as the previously cited, syntactical motifs. Moreover, CNNs hold other advantages for linguistic analysis. They are static architectures that, according to specific settings are more robust to vanishing gradient, and thus can also model long-term dependency in a sentence (Dauphin et al., Wen et al. 2016, and Adel and Schutze). Such a property may help to detect structures relying on different parts of a sentence.
 
