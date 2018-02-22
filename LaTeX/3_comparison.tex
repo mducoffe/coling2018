@@ -40,19 +40,33 @@ which is a practical solution for avoiding the use of GPUs at test time.
 
 \subsection{Deconvolution}
 
-Since we use same architecture as image detection, making a deconvolutional layer is really straightforward. There are several methods to visualize the deep internal mecanisms of a neural network. One is known as convolutional transposed. Our deconvolutional network use the same embedding and convolution layer as we use for the classification but we replace the finale dense layer by a transposed convolution layer. After we trained the model we setup the weight of each neuron of the deconvolutional network with the learned weights of the classification network. The result is a new network that takes as input a sequence of words and gives as output all the trained filters of the text classification applied on the given sequence. Then the activation score of each word is calculated as shown in Equation \ref{equation} with $x$ is the size of the embedding, and $y$ the number of applied filters : 
+% Since we use same architecture as image detection, making a deconvolutional layer is really straightforward. There are several methods to visualize the deep internal mecanisms of a neural network. One is known as convolutional transposed. Our deconvolutional network use the same embedding and convolution layer as we use for the classification but we replace the finale dense layer by a transposed convolution layer. After we trained the model we setup the weight of each neuron of the deconvolutional network with the learned weights of the classification network. The result is a new network that takes as input a sequence of words and gives as output all the trained filters of the text classification applied on the given sequence. Then the activation score of each word is calculated as shown in Equation \ref{equation} with $x$ is the size of the embedding, and $y$ the number of applied filters : 
+% 
+% \begin{equation}
+% \mathop{\sum^{x}\sum^{y}}_{i=1  j=1}  a_{ij} = s_{n}
+% \label{equation}
+% \end{equation}
+% 
+% \begin{figure}[h]
+% \begin{center}
+% \includegraphics[width=8cm]{img/model_deconv.png}
+% \caption{Deconvolution model}
+% \label{cnn}
+% \end{center}
+% \end{figure}
+Extending Deconvolution Networks for text is not straightforward. Usually, in computer vision, 
+the deconvolution is represented by a convolution whose weights depends on the filters of the CNNs:  we invert the weights of the channels and the filters and then transpose each kernel matrix. When considering deconvolution for text, transposing the kernel matrices is not realistic since we are dealing with nonisotropic dimensions - the word sequences and the filter dimension. Eventually, the kernel matrix is not transposed.
 
-\begin{equation}
-\mathop{\sum^{x}\sum^{y}}_{i=1  j=1}  a_{ij} = s_{n}
-\label{equation}
-\end{equation}
+Another drawback regards the dimension of the features map. We denote by features map; the output of the convolution before applying max pooling.
+Its shape is actually the tuple \textit{(\# words, \# filters)}. Because the filters’ width (red, yellow, blue and green in fig~\ref{cnn}) matches the embedding dimension, 
+the feature maps cannot contain this information. To project the feature map in the embedding space,  we need to convolve our feature map with the kernel matrices.
+In that aim, we upsample the feature map to obtain a 3-dimensional sample of size \textit{(\# words, embedding dimension, \# filters)}.
 
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=8cm]{img/model_deconv.png}
-\caption{Deconvolution model}
-\label{cnn}
-\end{center}
-\end{figure}
+To analyze the relevance of a word in a sentence, we only keep one value per words which corresponds to the sum along the embedding axis of the output of the deconvolution. We denote this score as deconvolution saliency.
 
-With this method we are able to show a sort of topology of a sequence of words. All words have an unique activation score related to the others. We will see now that this output of the deconvolution gives us much information on how the network makes its final descision (prediction). There are well known linguistic marks encoded inside the networm, as well as more complex patterns based on co-occurrences and possibly also on grammatical and syntaxic analysis.
+For a sake of consistency, we sum up our method in figure~\ref{deconv}
+
+With this method, we are able to show a sort of topology of a sequence of words. 
+Eventually, every word in a sentence has a unique deconvolution saliency score whose value is related to the others. 
+In the next section, we analyze the relevance of deconvolution saliency. We thoroughly demonstrate empirically, that the deconvolution saliency encodes 
+complex linguistic patterns based on co-occurrences and possibly also on grammatical and syntaxic analysis.
