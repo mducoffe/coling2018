@@ -13,10 +13,12 @@ CNNs for NLP work as an analogy between an image and a text representation. Inde
 
 We first discuss our choice of architectures. 
 If Recurrent Neural Networks (\textit{mostly GRU and LSTM}) are known to perform well on a broad range of tasks for text, recent comparisons have confirmed the advantage of CNNs 
-over RNNs when the task at hand is essentially a keyphrase recognition task [1]. Recognition tasks are at the heart of linguistic interests which mostly focus on contrastive analysis.
-Moreover, CNNs are static architectures that, according to specific settings, are more robust 
-to vanishing gradient problem and thus can also model long-term dependency in a sentence (Dauphin et al.,  
-Wen et al. (2016) and Adel and Schutze (2017)). 
+over RNNs when the task at hand is essentially a keyphrase recognition task [1]. 
+
+In Textual Mining, we aim at highlighting linguistics patterns in order to analyze their constrast: specificities and similarities in a corpus (\cite{Aho:72}). It mostly relies on frequential based methods such as z-scoring. However, such existing methods have so far encountered difficulties in underlining more challenging linguistic knowledge, which has yet been empirically observed.  As an example, we can cite syntactical motifs from (Mellet et Longree, 2009).
+
+In that context, supervised classification, especially CNNs, may be exploited for corpus analysis. Indeed, CNN learns automatically parameters to cluster similar instances and drive away instances from different categories. Eventually, their prediction relies on features which inferred specificities and similarities in a corpus. Projecting such features in the word embedding will reveal relevant spots and may automatize the discovery of new linguistic structure as the previously cited, syntactical motifs. Moreover, CNNs hold other advantages for linguistic analysis. They are static architectures that, according to specific settings are more robust to vanishing gradient, and thus can also model long-term dependency in a sentence (Dauphin et al., Wen et al. 2016, and Adel and Schutze). Such a property may help to detect structures relying on different parts of a sentence.
+
 % \textcolor{red}{Fred: Encore, la ligne qui suit est trop detaillee pour etre la et on ne voit pas le lien avec le reste du paragraphe}
 % Due to the convolution operators involved, 
 % they can be easily parallelized and may also be be easily used by the CPU, which is a practical solution for avoiding the use of GPUs at test time and thus providing wider access to our tools.
@@ -38,10 +40,10 @@ One can either train a decoder network or use backpropagation on the input insta
 While those methods may hold accurate information in their input recovery, they have two main drawbacks: 
 i) they are computationally expensive: the first method requires training a model for each latent representation, and the second relies 
 on backpropagation for each submitted sentence. ii) they are highly hyperparameter dependent and may require some finetuning depending on the task at hand.
-On the other hand, Deconvolution Networks, proposed by Zeiler et al in ?, provide an off-the-shelf method to project a feature map in the input 
+On the other hand, Deconvolution Networks, proposed by Zeiler et al (cite) ?, provide an off-the-shelf method to project a feature map in the input 
 space. It consists in inverting each convolutional layer iteratively, back to the input space. The inverse of a discrete convolution is 
 computationally challenging. In response, a coarse approximation may be employed which consists of inverting channels and filter weights 
 in a convolutional layer and then transposing their kernel matrix. More details of the deconvolution heuristic are provided in section~\ref{sec:method}.
 Deconvolution holds several advantages. First, it induces minimal computational requirements compared to previous visualization methods. 
-Also, it has been used with success for semantic segmentation on images: in ?; Noh et al demonstrate the efficiency of deconvolution networks 
+Also, it has been used with success for semantic segmentation on images: in ?; Noh et al (cite) demonstrate the efficiency of deconvolution networks 
 to predict segmentation masks to identify pixel-wise class labels. Thus deconvolution is able to localize meaningful structure in the input space.

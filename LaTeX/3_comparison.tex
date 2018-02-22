@@ -1,15 +1,15 @@
 \section{Model}
 \label{sec:model}
 
-\subsection{Text Classification}
+\subsection{CNN for Text Classification}
 
-We propose a deep neural model to capture linguistics paterns in text. This model is based on simple Convolutional Neural Network models with an embedding layer for word representaions, one convolutional with pooling layer and finaly one dense layer. Figure \ref{cnn} shows the global structure of our architecture. The input is a sequence of words $ w_{1}, w_{2} ... w_{n} $ and the output contains class elements (for text classification). The embedding is built on top of a Word2Vec architecture trained on a Skip-gram model. Our text tokenizer keeps all the words to make sure all linguistic material is detected at the end by the model. This embedding is also modifiable by the model to attain optimal text-classification acuracy. 
+We propose a deep neural model to capture linguistics patterns in text. This model is based on Convolutional Neural Networks with an embedding layer for word representations, one convolutional with pooling layer and non-linearities. Finally we have two fully-connected layers. The final output size corresponds to the number of classes we attempt to train. The model is trained by cross-entropy with an Adam optimizer. Figure \ref{cnn} shows the global structure of our architecture. The input is a sequence of words $ w_{1}, w_{2} ... w_{n} $ and the output contains class probabilities (for text classification). The embedding is built on top of a Word2Vec architecture trained on a Skip-gram model. Our text tokenizer keeps all the words to make sure all linguistic material is detected at the end by the model. This embedding is also finetuned by the model to attain optimal text-classification accuracy. 
 
-The Convolutional layer is based on a two-dimensional convolution, the same as used for picture convolution, but with a fixed width corresponding to the max width (this size is actually equal to the embedding size). With this setting, our usage of the two-dimensional convolution is in reallity the same as a one-dimensional convolution (the default convolutionnal layer for text). The only parameter we adjust here is the height of the filter corresponding to the number of words we want to put in the filter. The goal of this approach is to be able to use the standard picture deconvolution (also called transposed convolutions\footnote{transposed convolutions works by swapping the forward and backward passes of a convolution. It's a transformation that going in the opposite direction of a normal convolution}) methods for our model on text.
+The Convolutional layer is based on a two-dimensional convolution, the same as used for image convolution, but with a fixed width equal to the embedding size. Indeed, word embeddings are not intended to hold spatial information. With this setting, our usage of the two-dimensional convolution is in reality the same as a one-dimensional convolution (the default settings for text). The only parameter we adjust here is the height of the filter corresponding to the number of words we want to put in the filter. 
 
-For our needs, we limited the convolutional part at one layer only. The performances are good enough, but it's scallable and we can add more layers according to the dataset complexity.
+they can be easily parallelized and may also be be easily used by the CPU, which is a practical solution for avoiding the use of GPUs at test time and thus providing wider access to our tools.
 
-The last layer is a fully connected dense network with a softmax finishing on a output size corresponding to the number of classes we attempt to train. The model is trained by cross-entropy with an Adam optimizer.
+%The goal of this approach is to be able to use the standard image deconvolution (also called transposed convolutions) for our model on text.
 
 \begin{figure}[h]
 \begin{center}
